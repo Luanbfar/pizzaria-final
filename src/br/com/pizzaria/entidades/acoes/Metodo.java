@@ -2,14 +2,13 @@ package br.com.pizzaria.entidades.acoes;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Queue;
 import java.util.Random;
 
 import br.com.pizzaria.entidades.Pizza;
 
 public class Metodo {
-	Pizza pizz = new Pizza(null, null);
+	Pizza pizza = new Pizza();
 	private Queue<Pizza> pedidos = new ArrayDeque();
 	private ArrayList<Pizza> pizzas = new ArrayList<>();
 
@@ -25,7 +24,7 @@ public class Metodo {
 	public String retornarIngrediente() { // Cardapio
 		String ingrediente = " ";
 		ingrediente = "=========================";
-		for (String i : pizz.getIngredientes()) {
+		for (String i : pizza.getIngredientes()) {
 			ingrediente = i + "\n";
 		}
 		ingrediente = "=========================";
@@ -101,11 +100,11 @@ public class Metodo {
 			ArrayList<String> ingredientesAleatorios = new ArrayList<>();
 			Pizza pedido = null;
 			for (int i = 0; i < 5; i++) {
-				int indiceIngrediente = pedidoRandomico.nextInt(pizz.getIngredientes().size());
-				String ingrediente = pizz.getIngredientes().get(indiceIngrediente);
+				int indiceIngrediente = pedidoRandomico.nextInt(pizza.getIngredientes().size());
+				String ingrediente = pizza.getIngredientes().get(indiceIngrediente);
 				ingredientesAleatorios.add(ingrediente);
-				pedido = new Pizza(nome, ingredientesAleatorios);
 			}
+			pedido = new Pizza(nome, ingredientesAleatorios);
 			pedidos.add(pedido);
 
 			// prepararPizza(new Pizza(nome, ingredientesAleatorios)); não deve ter, é
@@ -113,5 +112,6 @@ public class Metodo {
 		} else {
 		}
 	}
+
 
 }

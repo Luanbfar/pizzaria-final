@@ -20,6 +20,8 @@ public class Pizza {
 		this.id = cont++;
 	}
 
+	public Pizza() {};
+
 	public final ArrayList<String> getIngredientes() {
 		ArrayList<String> ingredientes = new ArrayList<>();
 		ingredientes.add("Calabresaa");
@@ -36,7 +38,7 @@ public class Pizza {
 	}
 
 	// Na classe Pizza
-	public String ingredientesSTR() {
+	public String ingredientesStr() {
 		StringBuilder allIngredientesDisponiveis = new StringBuilder("Ingredientes disponíveis:\n");
 
 		ArrayList<String> ingredientesDisponiveis = getIngredientes();
