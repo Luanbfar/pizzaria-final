@@ -71,16 +71,15 @@ public class SaidaPrograma {
 									p.ingredientesSTR() + "Digite o ingrediente da pizza: ");
 							ingredientesPraPorNaPizza.add(ingrediente);
 						}
-						if (!ingrediente.trim().isEmpty() && ingredientesPraPorNaPizza.size() == 5
-								&& p.getIngredientes().contains(ingrediente)) {
+						if (!ingrediente.trim().isEmpty() && ingredientesPraPorNaPizza.size() == 5 && p.getIngredientes().contains(ingrediente)) {
 							m.prepararPizza(new Pizza(ingredientesPraPorNaPizza)); // Construtor com sobrecarga.
 							JOptionPane.showMessageDialog(null, "Pizza preparada com sucesso!!");
 
-						} else if (!p.getIngredientes().contains(ingrediente)) {
-							JOptionPane.showMessageDialog(null,
-									"Um dos ingredientes Inseridos não existe no cardápio!");
+						}else if(!p.getIngredientes().contains(ingrediente)){
+							JOptionPane.showMessageDialog(null, "Um dos ingredientes Inseridos não existe no cardápio!");
 
-						} else {
+						}
+						else {
 							throw new IngredienteInsuficiente();
 						}
 					} catch (IngredienteInsuficiente e) {
@@ -107,19 +106,6 @@ public class SaidaPrograma {
 					// Lógica para Estatísticas dos pedidos
 					break;
 				case 6:
-					try {
-						if (m.getPedido().isEmpty()) {
-							throw new NaoExistemPedidos();
-
-						} else {
-							JOptionPane.showMessageDialog(null, "Pedido atual: " + m.todosOsPedidos());
-
-						}
-
-					} catch (NaoExistemPedidos erro) {
-						JOptionPane.showMessageDialog(null, erro);
-
-					}
 					// Lógica para Olhar todos os Pedidos
 					break;
 				case 7:
