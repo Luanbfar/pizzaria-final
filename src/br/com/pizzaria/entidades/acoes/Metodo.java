@@ -50,6 +50,24 @@ public class Metodo {
 	}
 
 	public String olharPedidoAtual() throws NaoExistemPedidos {
+	    if (!pedidos.isEmpty()) {
+	        Pizza pedidoAtual = pedidos.peek(); // Obtém o próximo pedido sem removê-lo da fila
+
+	        StringBuilder pedidoAtualStr = new StringBuilder();
+	        pedidoAtualStr.append("Pedido Atual:\n");
+	        pedidoAtualStr.append("ID: ").append(pedidoAtual.getId()).append("\n");
+	        pedidoAtualStr.append("Nome: ").append(pedidoAtual.getNomeCliente()).append("\n");
+	        pedidoAtualStr.append("Ingredientes: ").append(pedidoAtual.getIngredientesAdicional()).append("\n");
+	        pedidoAtualStr.append("=========================\n");
+
+	        return pedidoAtualStr.toString();
+	    } else {
+	        throw new NaoExistemPedidos();
+	    }
+	}
+
+
+	public String todosOsPedidos() throws NaoExistemPedidos {    ///LEMBRAR QUE ESSE METODO NAO É NECESSARIO! SÓ P VER SE TEM PEDIDO MSM
 		if (!pedidos.isEmpty()) {
 			StringBuilder pedidosAtuais = new StringBuilder();
 
@@ -66,8 +84,8 @@ public class Metodo {
 			throw new NaoExistemPedidos();
 		}
 	}
-
-	public String listarPizzaCriada() {
+	
+	public String listarPizzaCriada() {                //LEMBRAR Q ESSE METODO NAO É NECESSÁRIO!!! SÓ P VER SE TEM PIZZA CRIADA
 		String pizzaAchada = null;
 		for (Pizza p : pizzas) {
 			pizzaAchada += "=========================";
