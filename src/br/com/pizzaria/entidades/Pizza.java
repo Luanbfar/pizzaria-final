@@ -3,65 +3,68 @@ package br.com.pizzaria.entidades;
 import java.util.ArrayList;
 
 public class Pizza {
-	private int id;
-	private String nomeCliente;
-	private ArrayList<String> ingredientesAdicional;
-	private static int cont = 0;
+    private int id;
+    private String nomeCliente;
+    private ArrayList<String> ingredientesAdicional;
+    private static int cont = 0;
 
-	public Pizza(String nomeCliente, ArrayList<String> ingredientesAdicional) {
-		this.nomeCliente = nomeCliente;
-		this.ingredientesAdicional = ingredientesAdicional;
-		this.id = cont++;
+    public Pizza(String nomeCliente, ArrayList<String> ingredientesAdicional) {
+        this.nomeCliente = nomeCliente;
+        this.ingredientesAdicional = ingredientesAdicional;
+        this.id = cont++;
 
-	}
+    }
 
-	public Pizza(ArrayList<String> ingredientesAdicional) {
-		this.ingredientesAdicional = ingredientesAdicional;
-		this.id = cont++;
-	}
+    public Pizza(ArrayList<String> ingredientesAdicional) {
+        this.ingredientesAdicional = ingredientesAdicional;
+        this.id = cont++;
+    }
 
-	public Pizza() {};
+    public Pizza() {
+    }
 
-	public final ArrayList<String> getIngredientes() {
-		ArrayList<String> ingredientes = new ArrayList<>();
-		ingredientes.add("Calabresaa");
-		ingredientes.add("Carne");
-		ingredientes.add("Mussarela");
-		ingredientes.add("Chedar");
-		ingredientes.add("Molho de Tomate");
-		ingredientes.add("Batata Palha");
-		ingredientes.add("Ovo");
-		ingredientes.add("Azeitona");
-		ingredientes.add("Milho");
-		ingredientes.add("Qualho");
-		return ingredientes;
-	}
+    ;
 
-	// Na classe Pizza
-	public String ingredientesStr() {
-		StringBuilder allIngredientesDisponiveis = new StringBuilder("Ingredientes disponíveis:\n");
+    public final ArrayList<String> getIngredientes() {
+        ArrayList<String> ingredientes = new ArrayList<>();
+        ingredientes.add("Calabresaa");
+        ingredientes.add("Carne");
+        ingredientes.add("Mussarela");
+        ingredientes.add("Chedar");
+        ingredientes.add("Molho de Tomate");
+        ingredientes.add("Batata Palha");
+        ingredientes.add("Ovo");
+        ingredientes.add("Azeitona");
+        ingredientes.add("Milho");
+        ingredientes.add("Qualho");
+        return ingredientes;
+    }
 
-		ArrayList<String> ingredientesDisponiveis = getIngredientes();
+    // Na classe Pizza
+    public String ingredientesStr() {
+        StringBuilder allIngredientesDisponiveis = new StringBuilder("Ingredientes disponíveis:\n");
 
-		if (ingredientesDisponiveis != null && !ingredientesDisponiveis.isEmpty()) {
-			for (String ingrediente : ingredientesDisponiveis) {
-				allIngredientesDisponiveis.append("==========================").append("\n");
-				allIngredientesDisponiveis.append(ingrediente).append("\n");
-			}
+        ArrayList<String> ingredientesDisponiveis = getIngredientes();
 
-		}
-		return allIngredientesDisponiveis.toString();
-	}
+        if (ingredientesDisponiveis != null && !ingredientesDisponiveis.isEmpty()) {
+            for (String ingrediente : ingredientesDisponiveis) {
+                allIngredientesDisponiveis.append("==========================").append("\n");
+                allIngredientesDisponiveis.append(ingrediente).append("\n");
+            }
 
-	public int getId() {
-		return id;
-	}
+        }
+        return allIngredientesDisponiveis.toString();
+    }
 
-	public String getNomeCliente() {
-		return nomeCliente;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public ArrayList<String> getIngredientesAdicional() {
-		return ingredientesAdicional;
-	}
+    public String getNomeCliente() {
+        return nomeCliente;
+    }
+
+    public ArrayList<String> getIngredientesAdicional() {
+        return ingredientesAdicional;
+    }
 }

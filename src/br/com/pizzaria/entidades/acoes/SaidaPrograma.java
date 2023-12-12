@@ -95,6 +95,7 @@ public class SaidaPrograma {
                             if (m.getPedido().isEmpty()) {
                                 throw new NaoExistemPedidos();
                             } else {
+
                                 m.servirPedido();
                                 JOptionPane.showMessageDialog(null, "Pedido servido com sucesso!!");
                             }
