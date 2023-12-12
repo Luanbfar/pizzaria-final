@@ -36,13 +36,11 @@ public class SaidaPrograma {
                         // RECEBER O PEDIDO DO CLIENTE Q É ALEATORIO
 
                         String cliente = JOptionPane.showInputDialog(null, "Nome do cliente: ");
-                        if (cliente.trim().isEmpty()) {
-
+                        if (cliente == null || cliente.isEmpty()) {
                             JOptionPane.showMessageDialog(null, "Pedido Não foi cadastrado!!");
                         } else {
                             m.receberUmPedidoAleatorio(cliente);
                             JOptionPane.showMessageDialog(null, "Pedido recebido com sucesso!!");
-
                         }
                         break;
                     case 2:
@@ -50,15 +48,12 @@ public class SaidaPrograma {
                         try {
                             if (m.getPedido().isEmpty()) {
                                 throw new NaoExistemPedidos();
-
                             } else {
                                 JOptionPane.showMessageDialog(null, "Pedido atual: " + m.olharPedidoAtual());
-
                             }
 
                         } catch (NaoExistemPedidos erro) {
                             JOptionPane.showMessageDialog(null, erro);
-
                         }
                         break;
                     case 3:
@@ -71,7 +66,7 @@ public class SaidaPrograma {
                                         p.ingredientesStr() + "Digite o ingrediente da pizza: ");
                                 ingredientesPraPorNaPizza.add(ingrediente);
                             }
-                            if (!ingrediente.trim().isEmpty() && ingredientesPraPorNaPizza.size() == 5
+                            if (ingrediente != null && !ingrediente.isEmpty() && ingredientesPraPorNaPizza.size() == 5
                                     && p.getIngredientes().contains(ingrediente)) {
                                 m.prepararPizza(new Pizza(ingredientesPraPorNaPizza)); // Construtor com sobrecarga.
                                 JOptionPane.showMessageDialog(null, "Pizza preparada com sucesso!!");
@@ -94,10 +89,10 @@ public class SaidaPrograma {
                         try {
                             if (m.getPedido().isEmpty()) {
                                 throw new NaoExistemPedidos();
-                            } else {
-
-                                m.servirPedido();
+                            } else if (m.servirPedido()) {
                                 JOptionPane.showMessageDialog(null, "Pedido servido com sucesso!!");
+                            } else {
+                                JOptionPane.showMessageDialog(null, "O pedido não foi servido.");
                             }
                         } catch (NaoExistemPedidos e) {
                             JOptionPane.showMessageDialog(null, e); // Assim que usa o exception
@@ -137,7 +132,7 @@ public class SaidaPrograma {
                         break;
                 }
             } catch (NumberFormatException erro) {
-                JOptionPane.showMessageDialog(null, "Insira valores válidos!" + erro);
+                JOptionPane.showMessageDialog(null, "Insira valores válidos!\n" + erro);
             }
         } while (opcao != 8);
 

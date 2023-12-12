@@ -6,7 +6,7 @@ public class Pizza {
     private int id;
     private String nomeCliente;
     private ArrayList<String> ingredientesAdicional;
-    private static int cont = 0;
+    private static int cont = 1;
 
     public Pizza(String nomeCliente, ArrayList<String> ingredientesAdicional) {
         this.nomeCliente = nomeCliente;
@@ -23,7 +23,6 @@ public class Pizza {
     public Pizza() {
     }
 
-    ;
 
     public final ArrayList<String> getIngredientes() {
         ArrayList<String> ingredientes = new ArrayList<>();
@@ -46,7 +45,7 @@ public class Pizza {
 
         ArrayList<String> ingredientesDisponiveis = getIngredientes();
 
-        if (ingredientesDisponiveis != null && !ingredientesDisponiveis.isEmpty()) {
+        if (!ingredientesDisponiveis.isEmpty()) {
             for (String ingrediente : ingredientesDisponiveis) {
                 allIngredientesDisponiveis.append("==========================").append("\n");
                 allIngredientesDisponiveis.append(ingrediente).append("\n");

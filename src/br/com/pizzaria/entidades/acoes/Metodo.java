@@ -1,11 +1,8 @@
 package br.com.pizzaria.entidades.acoes;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Queue;
-import java.util.Random;
-
 import br.com.pizzaria.entidades.Pizza;
+
+import java.util.*;
 
 public class Metodo {
     Pizza pizza = new Pizza();
@@ -23,11 +20,9 @@ public class Metodo {
 
     public String retornarIngrediente() { // Cardapio
         String ingrediente = " ";
-        ingrediente = "=========================";
         for (String i : pizza.getIngredientes()) {
             ingrediente = i + "\n";
         }
-        ingrediente = "=========================";
         return ingrediente;
     }
 
@@ -41,21 +36,26 @@ public class Metodo {
         }
     }
 
-    public void servirPedido() {
+    public Boolean servirPedido() {
+        Boolean pedidoServido = false;
         if (!pedidos.isEmpty()) {
-            Pizza pizzaAServir = pedidos.poll(); // Obtém e remove a primeira pizza da fila
-            for (Pizza p : pizzas) {
-                if (pedidos.peek().equals(p)) {
+            Iterator<Pizza> iterator = pizzas.iterator();
+            while (iterator.hasNext()) {
+                Pizza p = iterator.next();
+                if (pedidos.peek().getIngredientesAdicional().equals(p.getIngredientesAdicional())) {
+                    pedidos.poll();
+                    iterator.remove(); // Use iterator's remove method to safely remove the current element
                 }
-                pizzas.remove(p);
-                pedidos.remove(p);
             }
+            pedidoServido = true;
         }
+        return pedidoServido;
     }
+
 
     public String olharPedidoAtual() throws NaoExistemPedidos {
         if (!pedidos.isEmpty()) {  //PRA N RETORNAR NULL O PEEK
-            Pizza pedidoAtual = pedidos.peek();   //lembrar q o peek pega o primeiro sem remover!!! É APENAS O POOL!!
+            Pizza pedidoAtual = pedidos.peek();   //lembrar q o peek pega o primeiro sem remover!!! É APENAS O POLL!!
             StringBuilder pedidoAtualStr = new StringBuilder();
             pedidoAtualStr.append("Pedido Atual:\n");
             pedidoAtualStr.append("ID: ").append(pedidoAtual.getId()).append("\n");
@@ -117,6 +117,4 @@ public class Metodo {
         } else {
         }
     }
-
-
 }
