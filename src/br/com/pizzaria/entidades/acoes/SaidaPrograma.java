@@ -32,7 +32,7 @@ public class SaidaPrograma {
 
 				switch (opcao) {
 				case 1:
-					// RECEBER O PEDIDO DO CLIENTE
+					// RECEBER O PEDIDO DO CLIENTE Q É ALEATORIO
 
 					String cliente = JOptionPane.showInputDialog(null, "Nome do cliente: ");
 					if (cliente.trim().isEmpty()) {
@@ -46,7 +46,6 @@ public class SaidaPrograma {
 					break;
 				case 2:
 					// OLHAR O PEDIDO DO CLIENTE.
-					// Lógica para Olhar pedido atual
 					try {
 						if (m.getPedido().isEmpty()) {
 							throw new NaoExistemPedidos();
@@ -71,15 +70,16 @@ public class SaidaPrograma {
 									p.ingredientesSTR() + "Digite o ingrediente da pizza: ");
 							ingredientesPraPorNaPizza.add(ingrediente);
 						}
-						if (!ingrediente.trim().isEmpty() && ingredientesPraPorNaPizza.size() == 5 && p.getIngredientes().contains(ingrediente)) {
+						if (!ingrediente.trim().isEmpty() && ingredientesPraPorNaPizza.size() == 5
+								&& p.getIngredientes().contains(ingrediente)) {
 							m.prepararPizza(new Pizza(ingredientesPraPorNaPizza)); // Construtor com sobrecarga.
 							JOptionPane.showMessageDialog(null, "Pizza preparada com sucesso!!");
 
-						}else if(!p.getIngredientes().contains(ingrediente)){
-							JOptionPane.showMessageDialog(null, "Um dos ingredientes Inseridos não existe no cardápio!");
+						} else if (!p.getIngredientes().contains(ingrediente)) {
+							JOptionPane.showMessageDialog(null,
+									"Um dos ingredientes Inseridos não existe no cardápio!");
 
-						}
-						else {
+						} else {
 							throw new IngredienteInsuficiente();
 						}
 					} catch (IngredienteInsuficiente e) {
@@ -89,7 +89,7 @@ public class SaidaPrograma {
 					break;
 
 				case 4:
-					// Lógica para Servir pedido
+					//SERVIR OS PEDIDOS AQUI!! FALTA RESOLVER A QUESTAO DE COMPARAR
 					try {
 						if (m.getPedido().isEmpty()) {
 							throw new NaoExistemPedidos();
@@ -105,10 +105,26 @@ public class SaidaPrograma {
 				case 5:
 					// Lógica para Estatísticas dos pedidos
 					break;
-				case 6:
+				case 6: 
+					//CASE Q NAO PRECISA TER, É SO PRA VER SE FUNCIONA VER TODOS OS PEEDIDOS
+					try {
+						if (m.getPedido().isEmpty()) {
+							throw new NaoExistemPedidos();
+
+						} else {
+							JOptionPane.showMessageDialog(null, "Pedido atual: " + m.todosOsPedidos());
+
+						}
+
+					} catch (NaoExistemPedidos erro) {
+						JOptionPane.showMessageDialog(null, erro);
+
+					}
 					// Lógica para Olhar todos os Pedidos
 					break;
 				case 7:
+					//CASE Q NAO PRECISA TER, É SO PRA VER SE FUNCIONA VER TODAS AS PIZZAS CRIADAS!
+
 					JOptionPane.showMessageDialog(null, m.listarPizzaCriada());
 					break;
 				case 8:
