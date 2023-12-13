@@ -9,6 +9,8 @@ public class Metodo {
     private Queue<Pizza> pedidos = new ArrayDeque();
     private ArrayList<Pizza> pizzas = new ArrayList<>();
 
+    private ArrayList<Pizza> pizzasServidas = new ArrayList<>();
+
     public ArrayList<Pizza> getPizzas() {
         return pizzas;
     }
@@ -17,58 +19,50 @@ public class Metodo {
         return pedidos;
     }
 
-
-    public String retornarIngrediente() { // Cardapio
-        String ingrediente = " ";
-        for (String i : pizza.getIngredientes()) {
-            ingrediente = i + "\n";
-        }
-        return ingrediente;
-    }
-
-    public void prepararPizza(Pizza pizza) throws IngredienteInsuficiente {
-        // Lembrar do Contains no menu pra escolher os ingredientes QUE EXISTEM NO
-        // CARDAPIO!
+    public void prepararPizza(Pizza pizza) {
         if (pizza != null && pizza.getIngredientesAdicional().size() == 5) {
             pizzas.add(pizza);
-        } else {
-            throw new IngredienteInsuficiente();
         }
     }
 
     public Boolean servirPedido() {
         Boolean pedidoServido = false;
+        Pizza pizzaAchada = null;
         if (!pedidos.isEmpty()) {
-            Iterator<Pizza> iterator = pizzas.iterator();
-            while (iterator.hasNext()) {
-                Pizza p = iterator.next();
-                if (pedidos.peek().getIngredientesAdicional().equals(p.getIngredientesAdicional())) {
+            for (Pizza p : pizzas) {
+                int ingredientesCorretos = 0;
+                for (String pedidoIngrediente : pedidos.peek().getIngredientesAdicional()) {
+                    if (p.getIngredientesAdicional().contains(pedidoIngrediente)) {
+                        ingredientesCorretos++;
+                    }
+                }
+                if (ingredientesCorretos >= 3) {
+                    pizzaAchada = p;
                     pedidos.poll();
-                    iterator.remove(); // Use iterator's remove method to safely remove the current element
+                    pedidoServido = true;
+                    break;
                 }
             }
-            pedidoServido = true;
+            pizzasServidas.add(pizzaAchada);
+            pizzas.remove(pizzaAchada);
         }
         return pedidoServido;
     }
 
 
-    public String olharPedidoAtual() throws NaoExistemPedidos {
+    public String olharPedidoAtual() {
+        StringBuilder pedidoAtualStr = new StringBuilder();
         if (!pedidos.isEmpty()) {  //PRA N RETORNAR NULL O PEEK
             Pizza pedidoAtual = pedidos.peek();   //lembrar q o peek pega o primeiro sem remover!!! É APENAS O POLL!!
-            StringBuilder pedidoAtualStr = new StringBuilder();
             pedidoAtualStr.append("Pedido Atual:\n");
             pedidoAtualStr.append("ID: ").append(pedidoAtual.getId()).append("\n");
             pedidoAtualStr.append("Nome: ").append(pedidoAtual.getNomeCliente()).append("\n");
             pedidoAtualStr.append("Ingredientes: ").append(pedidoAtual.getIngredientesAdicional()).append("\n");
             pedidoAtualStr.append("=========================\n");
 
-            return pedidoAtualStr.toString();
-        } else {
-            throw new NaoExistemPedidos();
         }
+        return pedidoAtualStr.toString();
     }
-
 
     public String todosOsPedidos() throws NaoExistemPedidos {    ///LEMBRAR QUE ESSE METODO NAO É NECESSARIO! SÓ P VER SE TEM PEDIDO MSM
         if (!pedidos.isEmpty()) {
@@ -111,10 +105,60 @@ public class Metodo {
             }
             pedido = new Pizza(nome, ingredientesAleatorios);
             pedidos.add(pedido);
-
-            // prepararPizza(new Pizza(nome, ingredientesAleatorios)); não deve ter, é
-            // apenas um pedido!
-        } else {
         }
     }
+
+    public String calcularEstatisticas(ArrayList<Pizza> pizzas, Queue<Pizza> pedidos) {
+        StringBuilder estatisticas = new StringBuilder();
+
+        // Contagem de pizzas servidas
+        int totalPizzasServidas = pizzasServidas.size();
+        estatisticas.append("Pizzas Servidas: ").append(totalPizzasServidas).append("\n");
+
+        // Contagem de ingredientes utilizados
+        HashMap<String, Integer> ingredientesUtilizados = new HashMap<>();
+        for (Pizza pizza : pizzasServidas) {
+            for (String ingrediente : pizza.getIngredientesAdicional()) {
+                ingredientesUtilizados.put(ingrediente, ingredientesUtilizados.getOrDefault(ingrediente, 0) + 1);
+            }
+        }
+
+        // Encontrar o ingrediente mais pedido
+        String ingredienteMaisPedido = "";
+        int vezesMaisPedido = 0;
+        for (Map.Entry<String, Integer> entry : ingredientesUtilizados.entrySet()) {
+            if (entry.getValue() > vezesMaisPedido) {
+                ingredienteMaisPedido = entry.getKey();
+                vezesMaisPedido = entry.getValue();
+            }
+        }
+        estatisticas.append("Ingrediente Mais Pedido: ").append(ingredienteMaisPedido).append("\n");
+
+        // Encontrar ingredientes não utilizados
+        ArrayList<String> ingredientesNaoUtilizados = new ArrayList<>();
+        ArrayList<String> ingredientesDisponiveis = pizza.getIngredientes();
+        for (String ingrediente : ingredientesDisponiveis) {
+            if (!ingredientesUtilizados.containsKey(ingrediente)) {
+                ingredientesNaoUtilizados.add(ingrediente);
+            }
+        }
+        estatisticas.append("Ingredientes Não Utilizados: ").append(ingredientesNaoUtilizados).append("\n");
+
+        // Quantidade média de ingredientes corretos
+        int totalIngredientesCorretos = 0;
+        for (Pizza pizza : pizzasServidas) {
+            if (pizza.getIngredientesAdicional().size() == 5) {
+                totalIngredientesCorretos += 5;
+            }
+        }
+        double quantidadeMediaIngredientesCorretos = (double) totalIngredientesCorretos / pizzasServidas.size();
+        estatisticas.append("Quantidade Média de Ingredientes Corretos por Pizza: ").append(quantidadeMediaIngredientesCorretos).append("\n");
+
+        // Quantidade de pedidos na fila
+        int pedidosNaFila = pedidos.size();
+        estatisticas.append("Pedidos na Fila: ").append(pedidosNaFila).append("\n");
+
+        return estatisticas.toString();
+    }
+
 }

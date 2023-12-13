@@ -9,7 +9,7 @@ import br.com.pizzaria.entidades.Pizza;
 
 public class SaidaPrograma {
     public static void main(String[] args)
-            throws HeadlessException, NaoExistemPedidos, IngredienteInsuficiente, NumberFormatException {
+            throws NaoExistemPedidos, IngredienteInsuficiente, NumberFormatException {
         Metodo m = new Metodo();
         Pizza p = new Pizza();
 
@@ -33,31 +33,26 @@ public class SaidaPrograma {
 
                 switch (opcao) {
                     case 1:
-                        // RECEBER O PEDIDO DO CLIENTE Q É ALEATORIO
-
                         String cliente = JOptionPane.showInputDialog(null, "Nome do cliente: ");
-                        if (cliente == null || cliente.isEmpty()) {
-                            JOptionPane.showMessageDialog(null, "Pedido Não foi cadastrado!!");
-                        } else {
+                        if ((cliente != null) || !(cliente.isEmpty())) {
                             m.receberUmPedidoAleatorio(cliente);
                             JOptionPane.showMessageDialog(null, "Pedido recebido com sucesso!!");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Pedido Não foi cadastrado!!");
                         }
                         break;
                     case 2:
-                        // OLHAR O PEDIDO DO CLIENTE.
                         try {
-                            if (m.getPedido().isEmpty()) {
-                                throw new NaoExistemPedidos();
-                            } else {
+                            if (!(m.getPedido().isEmpty())) {
                                 JOptionPane.showMessageDialog(null, "Pedido atual: " + m.olharPedidoAtual());
+                            } else {
+                                throw new NaoExistemPedidos();
                             }
-
                         } catch (NaoExistemPedidos erro) {
                             JOptionPane.showMessageDialog(null, erro);
                         }
                         break;
                     case 3:
-                        // PREPARAR PIZZA
                         try {
                             ArrayList<String> ingredientesPraPorNaPizza = new ArrayList<>();
                             String ingrediente = null;
@@ -68,24 +63,21 @@ public class SaidaPrograma {
                             }
                             if (ingrediente != null && !ingrediente.isEmpty() && ingredientesPraPorNaPizza.size() == 5
                                     && p.getIngredientes().contains(ingrediente)) {
-                                m.prepararPizza(new Pizza(ingredientesPraPorNaPizza)); // Construtor com sobrecarga.
+                                m.prepararPizza(new Pizza(ingredientesPraPorNaPizza));
                                 JOptionPane.showMessageDialog(null, "Pizza preparada com sucesso!!");
 
                             } else if (!p.getIngredientes().contains(ingrediente)) {
                                 JOptionPane.showMessageDialog(null,
                                         "Um dos ingredientes Inseridos não existe no cardápio!");
-
                             } else {
                                 throw new IngredienteInsuficiente();
                             }
                         } catch (IngredienteInsuficiente e) {
-                            JOptionPane.showMessageDialog(null, e); // Assim que usa o exception
-
+                            JOptionPane.showMessageDialog(null, e);
                         }
                         break;
 
                     case 4:
-                        //SERVIR OS PEDIDOS AQUI!! FALTA RESOLVER A QUESTAO DE COMPARAR
                         try {
                             if (m.getPedido().isEmpty()) {
                                 throw new NaoExistemPedidos();
@@ -95,15 +87,13 @@ public class SaidaPrograma {
                                 JOptionPane.showMessageDialog(null, "O pedido não foi servido.");
                             }
                         } catch (NaoExistemPedidos e) {
-                            JOptionPane.showMessageDialog(null, e); // Assim que usa o exception
-
+                            JOptionPane.showMessageDialog(null, e);
                         }
                         break;
                     case 5:
-                        // Lógica para Estatísticas dos pedidos
+                        JOptionPane.showMessageDialog(null, m.calcularEstatisticas(m.getPizzas(), m.getPedido()));
                         break;
                     case 6:
-                        //CASE Q NAO PRECISA TER, É SO PRA VER SE FUNCIONA VER TODOS OS PEEDIDOS
                         try {
                             if (m.getPedido().isEmpty()) {
                                 throw new NaoExistemPedidos();
@@ -117,15 +107,11 @@ public class SaidaPrograma {
                             JOptionPane.showMessageDialog(null, erro);
 
                         }
-                        // Lógica para Olhar todos os Pedidos
                         break;
                     case 7:
-                        //CASE Q NAO PRECISA TER, É SO PRA VER SE FUNCIONA VER TODAS AS PIZZAS CRIADAS!
-
                         JOptionPane.showMessageDialog(null, m.listarPizzaCriada());
                         break;
                     case 8:
-                        // Lógica para Sair do programa
                         break;
                     default:
                         JOptionPane.showMessageDialog(null, "Opção inválida!");
@@ -137,7 +123,5 @@ public class SaidaPrograma {
         } while (opcao != 8);
 
         JOptionPane.showMessageDialog(null, "Obrigado por confiar na Pizzaria!");
-
-
     }
 }
