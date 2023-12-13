@@ -64,40 +64,11 @@ public class Metodo {
         return pedidoAtualStr.toString();
     }
 
-    public String todosOsPedidos() throws NaoExistemPedidos {    ///LEMBRAR QUE ESSE METODO NAO É NECESSARIO! SÓ P VER SE TEM PEDIDO MSM
-        if (!pedidos.isEmpty()) {
-            StringBuilder pedidosAtuais = new StringBuilder();
-
-            for (Pizza pedidoAtual : pedidos) {
-                pedidosAtuais.append("Pedido Atual:\n");
-                pedidosAtuais.append("ID: ").append(pedidoAtual.getId()).append("\n");
-                pedidosAtuais.append("Nome: ").append(pedidoAtual.getNomeCliente()).append("\n");
-                pedidosAtuais.append("Ingredientes: ").append(pedidoAtual.getIngredientesAdicional()).append("\n");
-                pedidosAtuais.append("=========================\n");
-            }
-
-            return pedidosAtuais.toString();
-        } else {
-            throw new NaoExistemPedidos();
-        }
-    }
-
-    public String listarPizzaCriada() {                //LEMBRAR Q ESSE METODO NAO É NECESSÁRIO!!! SÓ P VER SE TEM PIZZA CRIADA
-        String pizzaAchada = null;
-        for (Pizza p : pizzas) {
-            pizzaAchada += "=========================";
-            pizzaAchada += "\nID: " + p.getId();
-            pizzaAchada += "\nIngredietes: " + p.getIngredientesAdicional();
-            pizzaAchada += "\n=========================";
-        }
-        return pizzaAchada;
-    }
-
     public void receberUmPedidoAleatorio(String nome) {
         Random pedidoRandomico = new Random();
         if (nome != null) {
             ArrayList<String> ingredientesAleatorios = new ArrayList<>();
-            Pizza pedido = null;
+            Pizza pedido;
             for (int i = 0; i < 5; i++) {
                 int indiceIngrediente = pedidoRandomico.nextInt(pizza.getIngredientes().size());
                 String ingrediente = pizza.getIngredientes().get(indiceIngrediente);
@@ -108,14 +79,12 @@ public class Metodo {
         }
     }
 
-    public String calcularEstatisticas(ArrayList<Pizza> pizzas, Queue<Pizza> pedidos) {
+    public String calcularEstatisticas() {
         StringBuilder estatisticas = new StringBuilder();
 
-        // Contagem de pizzas servidas
         int totalPizzasServidas = pizzasServidas.size();
-        estatisticas.append("Pizzas Servidas: ").append(totalPizzasServidas).append("\n");
+        estatisticas.append("Pizzas servidas: ").append(totalPizzasServidas).append("\n");
 
-        // Contagem de ingredientes utilizados
         HashMap<String, Integer> ingredientesUtilizados = new HashMap<>();
         for (Pizza pizza : pizzasServidas) {
             for (String ingrediente : pizza.getIngredientesAdicional()) {
@@ -123,7 +92,6 @@ public class Metodo {
             }
         }
 
-        // Encontrar o ingrediente mais pedido
         String ingredienteMaisPedido = "";
         int vezesMaisPedido = 0;
         for (Map.Entry<String, Integer> entry : ingredientesUtilizados.entrySet()) {
@@ -132,9 +100,8 @@ public class Metodo {
                 vezesMaisPedido = entry.getValue();
             }
         }
-        estatisticas.append("Ingrediente Mais Pedido: ").append(ingredienteMaisPedido).append("\n");
+        estatisticas.append("Ingrediente mais pedido: ").append(ingredienteMaisPedido).append("\n");
 
-        // Encontrar ingredientes não utilizados
         ArrayList<String> ingredientesNaoUtilizados = new ArrayList<>();
         ArrayList<String> ingredientesDisponiveis = pizza.getIngredientes();
         for (String ingrediente : ingredientesDisponiveis) {
@@ -142,9 +109,8 @@ public class Metodo {
                 ingredientesNaoUtilizados.add(ingrediente);
             }
         }
-        estatisticas.append("Ingredientes Não Utilizados: ").append(ingredientesNaoUtilizados).append("\n");
+        estatisticas.append("Ingredientes não utilizados: ").append(ingredientesNaoUtilizados).append("\n");
 
-        // Quantidade média de ingredientes corretos
         int totalIngredientesCorretos = 0;
         for (Pizza pizza : pizzasServidas) {
             if (pizza.getIngredientesAdicional().size() == 5) {
@@ -152,11 +118,10 @@ public class Metodo {
             }
         }
         double quantidadeMediaIngredientesCorretos = (double) totalIngredientesCorretos / pizzasServidas.size();
-        estatisticas.append("Quantidade Média de Ingredientes Corretos por Pizza: ").append(quantidadeMediaIngredientesCorretos).append("\n");
+        estatisticas.append("Quantidade média de ingredientes corretos por pizza: ").append(quantidadeMediaIngredientesCorretos).append("\n");
 
-        // Quantidade de pedidos na fila
         int pedidosNaFila = pedidos.size();
-        estatisticas.append("Pedidos na Fila: ").append(pedidosNaFila).append("\n");
+        estatisticas.append("Pedidos na fila: ").append(pedidosNaFila).append("\n");
 
         return estatisticas.toString();
     }

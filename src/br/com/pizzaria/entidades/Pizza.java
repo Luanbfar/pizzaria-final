@@ -26,10 +26,10 @@ public class Pizza {
 
     public final ArrayList<String> getIngredientes() {
         ArrayList<String> ingredientes = new ArrayList<>();
-        ingredientes.add("Calabresaa");
+        ingredientes.add("Calabresa");
         ingredientes.add("Carne");
         ingredientes.add("Mussarela");
-        ingredientes.add("Chedar");
+        ingredientes.add("Cheddar");
         ingredientes.add("Molho de Tomate");
         ingredientes.add("Batata Palha");
         ingredientes.add("Ovo");

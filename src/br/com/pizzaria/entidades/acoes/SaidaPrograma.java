@@ -1,15 +1,13 @@
 package br.com.pizzaria.entidades.acoes;
 
-import java.awt.HeadlessException;
-import java.util.ArrayList;
-
-import javax.swing.JOptionPane;
-
 import br.com.pizzaria.entidades.Pizza;
+
+import javax.swing.*;
+import java.util.ArrayList;
 
 public class SaidaPrograma {
     public static void main(String[] args)
-            throws NaoExistemPedidos, IngredienteInsuficiente, NumberFormatException {
+            throws NumberFormatException {
         Metodo m = new Metodo();
         Pizza p = new Pizza();
 
@@ -20,9 +18,7 @@ public class SaidaPrograma {
                 3) Preparar uma pizza
                 4) Servir pedido
                 5) Estatísticas dos pedidos
-                6) Olhar todos os Pedidos            					 //VER SE REALMENTE FUNCIONA
-                7) Listar pizzas Criadas								//VER SE REALMENTE FUNCIONA
-                8) Sair do programa
+                6) Sair do programa
 
                 """;
 
@@ -34,7 +30,7 @@ public class SaidaPrograma {
                 switch (opcao) {
                     case 1:
                         String cliente = JOptionPane.showInputDialog(null, "Nome do cliente: ");
-                        if ((cliente != null) || !(cliente.isEmpty())) {
+                        if ((cliente != null) && !(cliente.isEmpty())) {
                             m.receberUmPedidoAleatorio(cliente);
                             JOptionPane.showMessageDialog(null, "Pedido recebido com sucesso!!");
                         } else {
@@ -91,27 +87,9 @@ public class SaidaPrograma {
                         }
                         break;
                     case 5:
-                        JOptionPane.showMessageDialog(null, m.calcularEstatisticas(m.getPizzas(), m.getPedido()));
+                        JOptionPane.showMessageDialog(null, m.calcularEstatisticas());
                         break;
                     case 6:
-                        try {
-                            if (m.getPedido().isEmpty()) {
-                                throw new NaoExistemPedidos();
-
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Pedido atual: " + m.todosOsPedidos());
-
-                            }
-
-                        } catch (NaoExistemPedidos erro) {
-                            JOptionPane.showMessageDialog(null, erro);
-
-                        }
-                        break;
-                    case 7:
-                        JOptionPane.showMessageDialog(null, m.listarPizzaCriada());
-                        break;
-                    case 8:
                         break;
                     default:
                         JOptionPane.showMessageDialog(null, "Opção inválida!");
@@ -120,7 +98,7 @@ public class SaidaPrograma {
             } catch (NumberFormatException erro) {
                 JOptionPane.showMessageDialog(null, "Insira valores válidos!\n" + erro);
             }
-        } while (opcao != 8);
+        } while (opcao != 6);
 
         JOptionPane.showMessageDialog(null, "Obrigado por confiar na Pizzaria!");
     }
