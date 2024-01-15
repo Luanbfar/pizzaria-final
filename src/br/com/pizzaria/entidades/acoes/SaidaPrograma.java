@@ -8,10 +8,12 @@ import java.util.ArrayList;
 public class SaidaPrograma {
     public static void main(String[] args)
             throws NumberFormatException {
+        Pizza.addIngredientes();
         Metodo m = new Metodo();
-        Pizza p = new Pizza();
+        Pizza p = new Pizza(null);
 
         int opcao = 0;
+        String ingredientesStr = p.ingredientesStr();
         String menu = """
                 1) Receber um pedido aleatório
                 2) Olhar pedido atual
@@ -52,14 +54,15 @@ public class SaidaPrograma {
                         try {
                             ArrayList<String> ingredientesPraPorNaPizza = new ArrayList<>();
                             String ingrediente = null;
+
                             for (int i = 0; i < 5; i++) {
                                 ingrediente = JOptionPane.showInputDialog(null,
-                                        p.ingredientesStr() + "Digite o ingrediente da pizza: ");
+                                        ingredientesStr + "Digite o ingrediente da pizza: ");
                                 ingredientesPraPorNaPizza.add(ingrediente);
                             }
                             if (ingrediente != null && !ingrediente.isEmpty() && ingredientesPraPorNaPizza.size() == 5
                                     && p.getIngredientes().contains(ingrediente)) {
-                                m.prepararPizza(new Pizza(ingredientesPraPorNaPizza));
+                                m.prepararPizza(ingredientesPraPorNaPizza);
                                 JOptionPane.showMessageDialog(null, "Pizza preparada com sucesso!!");
 
                             } else if (!p.getIngredientes().contains(ingrediente)) {
