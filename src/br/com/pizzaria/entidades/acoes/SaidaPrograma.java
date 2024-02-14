@@ -1,6 +1,8 @@
 package br.com.pizzaria.entidades.acoes;
 
 import br.com.pizzaria.entidades.Pizza;
+import br.com.pizzaria.entidades.exceptions.IngredienteInsuficiente;
+import br.com.pizzaria.entidades.exceptions.NaoExistemPedidos;
 
 import javax.swing.*;
 import java.util.ArrayList;
